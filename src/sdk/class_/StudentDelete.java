@@ -4,6 +4,11 @@ import sdk.Const;
 import utils.FileUtil;
 import utils.HttpJSONRequest;
 
+/**
+ * É¾³ýÑ§Éú
+ * @author Administrator
+ *
+ */
 public class StudentDelete {
 	private static String path = StudentDelete.class.getResource("").getPath();
 	public static void main(String[] args) {

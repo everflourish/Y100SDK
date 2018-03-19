@@ -4,6 +4,11 @@ import sdk.Const;
 import utils.FileUtil;
 import utils.HttpJSONRequest;
 
+/**
+ * 修改学生信息
+ * @author Administrator
+ *
+ */
 public class StudentUpdate {
 	private static String path = StudentUpdate.class.getResource("").getPath();
 	public static void main(String[] args) {
