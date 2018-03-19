@@ -15,6 +15,7 @@ public class Reg {
 		String json = FileUtil.readStream(path+"Reg.json");
 		String result = HttpJSONRequest.post(Const.DO_MAIN_URL+"third/api/core/reg/nologin", json);
 		System.out.println(result);
-		//result = {"orgId":877,"userId":"402880c1623d1cad01623d2075cf0000","resultCode":"0000001"}
+		//result = {"orgId":878,"userId":"402880c1623d349401623d3aa6870004","resultCode":"0000001"}
+
 	}
 }
