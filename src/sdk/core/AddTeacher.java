@@ -1,4 +1,4 @@
-package sdk.organization;
+package sdk.core;
 
 import sdk.Const;
 import utils.FileUtil;
