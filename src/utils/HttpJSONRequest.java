@@ -23,6 +23,12 @@ public class HttpJSONRequest {
 		String result = HttpJSONRequest.sendPostJson(url, jsonStr);
 		return result;
 	}
+	public static String getLoginParamUrl(String name) {
+		String timestamp = System.currentTimeMillis()/1000+"";
+		String sign = ThirdApiSignUtil.stringMD5(Const.KEY + Const.SECRET + timestamp + name);
+		String url = Const.LOGIN_URL + "?key="+Const.KEY+"&timestamp="+timestamp+"&sign="+sign+"&username="+name;
+		return url;
+	}
 	/**
 	 * ∑¢ÀÕHttpPost«Î«Û
 	 * 
