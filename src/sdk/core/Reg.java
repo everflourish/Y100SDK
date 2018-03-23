@@ -5,7 +5,7 @@ import utils.FileUtil;
 import utils.HttpJSONRequest;
 
 /**
- * ×¢²áÕËºÅ
+ * æ³¨å†Œè´¦å·
  * @author xieqiuming
  *
  */

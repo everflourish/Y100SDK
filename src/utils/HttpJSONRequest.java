@@ -11,15 +11,16 @@ import sdk.Const;
 
 public class HttpJSONRequest {
 	/**
-	 * µ÷ÓÃ¼¸¿Ú
-	 * @param url ½Ó¿ÚµØÖ·
-	 * @param outputStr ´«Èë²ÎÊı
-	 * @return ½Ó¿Ú·µ»Ø×Ö·û´®
+	 * è°ƒç”¨æ¥å£
+	 * @param url åœ°å€Ö·
+	 * @param outputStr JSONå‚æ•°
+	 * @return 
 	 */
 	public static String post(String url,String jsonStr) {		
 		String timestamp = System.currentTimeMillis()/1000+"";
 		String sign = ThirdApiSignUtil.stringMD5(Const.KEY + Const.SECRET + timestamp + jsonStr);
 		url += "?key="+Const.KEY+"&timestamp="+timestamp+"&sign="+sign;
+		System.out.println(url);
 		String result = HttpJSONRequest.sendPostJson(url, jsonStr);
 		return result;
 	}
@@ -30,33 +31,33 @@ public class HttpJSONRequest {
 		return url;
 	}
 	/**
-	 * ·¢ËÍHttpPostÇëÇó
+	 * HttpPost
 	 * 
 	 * @param strURL
-	 *            ·şÎñµØÖ·
+	 *            åœ°å€Ö·
 	 * @param params
-	 *            json×Ö·û´®,ÀıÈç: "{ \"id\":\"12345\" }" ;ÆäÖĞÊôĞÔÃû±ØĞë´øË«ÒıºÅ<br/>
-	 * @return ³É¹¦:·µ»Øjson×Ö·û´®<br/>
+	 *            jsonå‚æ•°: "{ \"id\":\"12345\" }" ;
+	 * @return å­—ç¬¦ä¸²
 	 */
 	public static String sendPostJson(String strURL, String params) {
 		BufferedReader in = null;
 		OutputStreamWriter out = null;
 		String result = "";
 		try {
-			URL url = new URL(strURL);// ´´½¨Á¬½Ó
+			URL url = new URL(strURL);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
 			connection.setUseCaches(false);
 			connection.setInstanceFollowRedirects(true);
-			connection.setRequestMethod("POST"); // ÉèÖÃÇëÇó·½Ê½
-			connection.setRequestProperty("Accept", "application/json"); // ÉèÖÃ½ÓÊÕÊı¾İµÄ¸ñÊ½
-			connection.setRequestProperty("Content-Type", "application/json"); // ÉèÖÃ·¢ËÍÊı¾İµÄ¸ñÊ½
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Accept", "application/json");
+			connection.setRequestProperty("Content-Type", "application/json");
 			connection.connect();
-			out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8"); // utf-8±àÂë
+			out = new OutputStreamWriter(connection.getOutputStream(), Const.CHATSET);
 			out.append(params);
 			out.flush();
-			InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "utf-8");
+			InputStreamReader isr = new InputStreamReader(connection.getInputStream(), Const.CHATSET);
 			in = new BufferedReader(isr);
 			String line;
 			while ((line = in.readLine()) != null) {

@@ -1,10 +1,13 @@
 package utils;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import sdk.Const;
+
 /**
- * Ç©ÃûÐ£Ñé¹¤¾ß
+ * Ç©ï¿½ï¿½Ð£ï¿½é¹¤ï¿½ï¿½
  * 
  * @author xieqiuming
  *
@@ -13,41 +16,39 @@ public class ThirdApiSignUtil {
 	
 	
 	/**
-	 * Ç©Ãû
+	 * ç­¾å
 	 * 
 	 * @param key
-	 *            µÚÈý·½Æ½Ì¨Æ¾Ö¤
+	 *  Ö¤
 	 * @param appSecret
-	 *            µÚÈý·½Æ½Ì¨½Ó¿ÚÃØÔ¿
+	 *            ç§˜é’¥
 	 * @param timptrap
-	 *            Ê±¼ä´Á£¨¾«È·µ½Ãë£©
+	 *            æ—¶é—´æˆ³
 	 * @param outputStr
-	 *            ´«ÈëµÄJSON×Ö·û´®
+	 *           è¾“å‡ºå†…å®¹
 	 * @return
 	 */
 	public static String sign(String key, String appSecret, String timestamp, String outputStr) {
-		// Ê¹ÓÃMD5¼ÓÃÜ
 		return stringMD5(key + appSecret + timestamp + outputStr);
 	}
 
 	/**
-	 * »ñÈ¡¼ÓÃÜºóµÄ×Ö·û´®
+	 * md5åŠ å¯†
 	 * 
 	 * @param input
 	 * @return
 	 */
 	public static String stringMD5(String pw) {
 		try {
-
-			// ÄÃµ½Ò»¸öMD5×ª»»Æ÷£¨Èç¹ûÏëÒªSHA1²ÎÊý»»³É¡±SHA1¡±£©
 			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-			// ÊäÈëµÄ×Ö·û´®×ª»»³É×Ö½ÚÊý×é
-			byte[] inputByteArray = pw.getBytes();
-			// inputByteArrayÊÇÊäÈë×Ö·û´®×ª»»µÃµ½µÄ×Ö½ÚÊý×é
+			byte[] inputByteArray = null;
+			try {
+				inputByteArray = pw.getBytes(Const.CHATSET);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 			messageDigest.update(inputByteArray);
-			// ×ª»»²¢·µ»Ø½á¹û£¬Ò²ÊÇ×Ö½ÚÊý×é£¬°üº¬16¸öÔªËØ
 			byte[] resultByteArray = messageDigest.digest();
-			// ×Ö·ûÊý×é×ª»»³É×Ö·û´®·µ»Ø
 			return byteArrayToHex(resultByteArray).toLowerCase();
 		} catch (NoSuchAlgorithmException e) {
 			return null;
@@ -55,18 +56,13 @@ public class ThirdApiSignUtil {
 	}
 
 	public static String byteArrayToHex(byte[] byteArray) {
-
-		// Ê×ÏÈ³õÊ¼»¯Ò»¸ö×Ö·ûÊý×é£¬ÓÃÀ´´æ·ÅÃ¿¸ö16½øÖÆ×Ö·û
 		char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-		// newÒ»¸ö×Ö·ûÊý×é£¬Õâ¸ö¾ÍÊÇÓÃÀ´×é³É½á¹û×Ö·û´®µÄ£¨½âÊÍÒ»ÏÂ£ºÒ»¸öbyteÊÇ°ËÎ»¶þ½øÖÆ£¬Ò²¾ÍÊÇ2Î»Ê®Áù½øÖÆ×Ö·û£¨2µÄ8´Î·½µÈÓÚ16µÄ2´Î·½£©£©
 		char[] resultCharArray = new char[byteArray.length * 2];
-		// ±éÀú×Ö½ÚÊý×é£¬Í¨¹ýÎ»ÔËËã£¨Î»ÔËËãÐ§ÂÊ¸ß£©£¬×ª»»³É×Ö·û·Åµ½×Ö·ûÊý×éÖÐÈ¥
 		int index = 0;
 		for (byte b : byteArray) {
 			resultCharArray[index++] = hexDigits[b >>> 4 & 0xf];
 			resultCharArray[index++] = hexDigits[b & 0xf];
 		}
-		// ×Ö·ûÊý×é×éºÏ³É×Ö·û´®·µ»Ø
 		return new String(resultCharArray);
 	}
 }
